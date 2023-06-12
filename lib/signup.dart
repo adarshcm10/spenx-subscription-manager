@@ -218,8 +218,11 @@ class _signupState extends State<signup> {
               padding: const EdgeInsets.only(top: 30),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacement(DissolvePageRoute(page: home()));
+                  var names = widget.name.text;
+                  Navigator.of(context).pushReplacement(DissolvePageRoute(
+                      page: home(
+                    user: names,
+                  )));
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(330, 60),
@@ -243,9 +246,6 @@ class _signupState extends State<signup> {
               padding: const EdgeInsets.only(top: 30),
               child: TextButton(
                 onPressed: () {
-                  var thename = widget.name.text;
-                  var thepass = widget.name.text;
-                  adduser(thename, thepass);
                   Navigator.pushReplacement(
                       context, SlideRightRoute(page: const signin()));
                 },

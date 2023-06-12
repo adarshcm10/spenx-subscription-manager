@@ -97,8 +97,10 @@ class _signinState extends State<signin> {
               padding: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacement(DissolvePageRoute(page: home()));
+                  Navigator.of(context).pushReplacement(DissolvePageRoute(
+                      page: home(
+                    user: 'adarsh',
+                  )));
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(330, 60),

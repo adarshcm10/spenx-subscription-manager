@@ -8,7 +8,8 @@ import 'package:spenx/subcard.dart';
 import 'package:spenx/transitions.dart';
 
 class home extends StatefulWidget {
-  home({super.key});
+  String user;
+  home({super.key, required this.user});
   final subname = TextEditingController();
   final duedt = TextEditingController();
   final price = TextEditingController();
@@ -99,7 +100,7 @@ class _homeState extends State<home> {
                             fontSize: 23),
                       ),
                       onTap: () {
-                        Navigator.push(context, SlideRightRoute(page: home()));
+                        //Navigator.push(context, SlideRightRoute(page: home()));
                       }),
                   ListTile(
                       title: const Text(
@@ -110,7 +111,7 @@ class _homeState extends State<home> {
                             fontSize: 23),
                       ),
                       onTap: () {
-                        Navigator.push(context, SlideRightRoute(page: home()));
+                        //Navigator.push(context, SlideRightRoute(page: home()));
                       }),
                   ListTile(
                       title: const Text(
@@ -121,7 +122,7 @@ class _homeState extends State<home> {
                             fontSize: 23),
                       ),
                       onTap: () {
-                        Navigator.push(context, SlideRightRoute(page: home()));
+                        //Navigator.push(context, SlideRightRoute(page: home()));
                       }),
                   ListTile(
                       title: const Text(
@@ -147,7 +148,7 @@ class _homeState extends State<home> {
             padding: const EdgeInsets.only(top: 34),
             child: Center(
               child: Text(
-                'Total due\nthis month of',
+                'Total due\nthis month of ' + widget.user,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'GothamLight',
@@ -157,6 +158,7 @@ class _homeState extends State<home> {
               ),
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.only(top: 25),
             child: Text(
