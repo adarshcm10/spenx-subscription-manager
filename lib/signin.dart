@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:spenx/signup.dart';
 import 'package:spenx/transitions.dart';
@@ -5,13 +7,31 @@ import 'package:spenx/transitions.dart';
 import 'home.dart';
 
 class signin extends StatefulWidget {
-  const signin({super.key});
+  signin({super.key});
 
   @override
   State<signin> createState() => _signinState();
 }
 
 class _signinState extends State<signin> {
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
+  void validateFields() {
+    if (controller1.text.isEmpty || controller2.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Email or password is empty'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(DissolvePageRoute(
+          page: home(
+        user: 'adarsh',
+      )));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +53,7 @@ class _signinState extends State<signin> {
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
               child: TextField(
+                controller: controller1,
                 decoration: InputDecoration(
                   hintText: 'Email address',
                   hintStyle: TextStyle(
@@ -67,7 +88,9 @@ class _signinState extends State<signin> {
                 ),
               ),
             ),
-            const PasswordTextField(),
+            PasswordTextField(
+              controler2: controller2,
+            ),
             Padding(
               padding: const EdgeInsets.only(left: 30),
               child: Container(
@@ -97,10 +120,7 @@ class _signinState extends State<signin> {
               padding: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(DissolvePageRoute(
-                      page: home(
-                    user: 'adarsh',
-                  )));
+                  validateFields();
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(330, 60),
@@ -167,33 +187,21 @@ class _signinState extends State<signin> {
 }
 
 class PasswordTextField extends StatefulWidget {
-  const PasswordTextField({Key? key}) : super(key: key);
+  TextEditingController controler2;
+  PasswordTextField({Key? key, required this.controler2}) : super(key: key);
 
   _PasswordTextFieldState createState() => _PasswordTextFieldState();
 }
 
 class _PasswordTextFieldState extends State<PasswordTextField> {
   bool _isObscured = true;
-  late TextEditingController _textEditingController;
-
-  @override
-  void initState() {
-    super.initState();
-    _textEditingController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
       child: TextField(
-        controller: _textEditingController,
+        controller: widget.controler2,
         obscureText: _isObscured,
         decoration: InputDecoration(
           hintText: 'Password',

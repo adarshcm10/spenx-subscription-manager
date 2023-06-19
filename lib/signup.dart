@@ -1,15 +1,14 @@
 // ignore_for_file: camel_case_types, library_private_types_in_public_api, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:spenx/home.dart';
 import 'package:spenx/signin.dart';
 import 'package:spenx/transitions.dart';
-import 'package:spenx/var.dart';
 
 class signup extends StatefulWidget {
   signup({super.key});
   final name = TextEditingController();
+  final email = TextEditingController();
   final pass = TextEditingController();
   final pass2 = TextEditingController();
 
@@ -17,9 +16,26 @@ class signup extends StatefulWidget {
   State<signup> createState() => _signupState();
 }
 
-//final _textEditingController = TextEditingController;
-
 class _signupState extends State<signup> {
+  void validate() {
+    if (widget.name.text.isEmpty ||
+        widget.pass.text.isEmpty ||
+        widget.pass2.text.isEmpty ||
+        widget.email.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('One or more fields are empty'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(DissolvePageRoute(
+          page: home(
+        user: 'adarsh',
+      )));
+    }
+  }
+
   bool _isObscured = true;
   @override
   Widget build(BuildContext context) {
@@ -38,6 +54,7 @@ class _signupState extends State<signup> {
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
               child: TextField(
+                controller: widget.name,
                 decoration: InputDecoration(
                   hintText: 'Full name',
                   hintStyle: TextStyle(
@@ -75,7 +92,7 @@ class _signupState extends State<signup> {
             Padding(
               padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
               child: TextField(
-                controller: widget.name,
+                controller: widget.email,
                 decoration: InputDecoration(
                   hintText: 'Email address',
                   hintStyle: TextStyle(
@@ -218,11 +235,7 @@ class _signupState extends State<signup> {
               padding: const EdgeInsets.only(top: 30),
               child: ElevatedButton(
                 onPressed: () {
-                  var names = widget.name.text;
-                  Navigator.of(context).pushReplacement(DissolvePageRoute(
-                      page: home(
-                    user: names,
-                  )));
+                  validate();
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(330, 60),
@@ -247,7 +260,7 @@ class _signupState extends State<signup> {
               child: TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
-                      context, SlideRightRoute(page: const signin()));
+                      context, SlideRightRoute(page: signin()));
                 },
                 style: ButtonStyle(
                   overlayColor: MaterialStateProperty.resolveWith<Color>(

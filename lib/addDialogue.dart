@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:spenx/services/notif_service.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'datepick.dart';
 
 class addDialogue extends StatefulWidget {
   final subname;
@@ -80,44 +83,47 @@ class _addDialogueState extends State<addDialogue> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: TextField(
-                textCapitalization: TextCapitalization.sentences,
-                controller: widget.duedt,
-                decoration: InputDecoration(
-                  hintText: 'Due Date',
-                  hintStyle: TextStyle(
-                    fontFamily: 'GothamLight',
-                    fontSize: 20,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 15.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                    borderSide: BorderSide(
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                    borderSide: BorderSide(
-                      color: Colors.white.withOpacity(0.7),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                    borderSide: BorderSide(
-                      color: Colors.white.withOpacity(0.6),
-                    ),
-                  ),
-                ),
-                autofocus: false,
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 10),
+            //   child: TextField(
+            //     textCapitalization: TextCapitalization.sentences,
+            //     controller: widget.duedt,
+            //     decoration: InputDecoration(
+            //       hintText: 'Due Date',
+            //       hintStyle: TextStyle(
+            //         fontFamily: 'GothamLight',
+            //         fontSize: 20,
+            //         color: Colors.white.withOpacity(0.7),
+            //       ),
+            //       contentPadding: const EdgeInsets.symmetric(
+            //           vertical: 10.0, horizontal: 15.0),
+            //       border: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(7.0),
+            //         borderSide: BorderSide(
+            //           color: Colors.white.withOpacity(0.6),
+            //         ),
+            //       ),
+            //       focusedBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(7.0),
+            //         borderSide: BorderSide(
+            //           color: Colors.white.withOpacity(0.7),
+            //         ),
+            //       ),
+            //       enabledBorder: OutlineInputBorder(
+            //         borderRadius: BorderRadius.circular(7.0),
+            //         borderSide: BorderSide(
+            //           color: Colors.white.withOpacity(0.6),
+            //         ),
+            //       ),
+            //     ),
+            //     autofocus: false,
+            //     style: const TextStyle(
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ),
+            YourWidget(
+              duedt: widget.duedt,
             ),
             TextField(
               keyboardType: TextInputType.number,
