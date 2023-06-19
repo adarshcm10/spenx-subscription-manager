@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names, camel_case_types
+
 import 'package:flutter/material.dart';
 
 class subcard extends StatelessWidget {
@@ -5,6 +7,23 @@ class subcard extends StatelessWidget {
   final desc;
   final Rate;
   const subcard({super.key, this.Name, this.desc, this.Rate});
+
+  String findasset() {
+    String imx = 'assets/Icons/default.png';
+    if (Name == 'Netflix' || Name == 'netflix') {
+      imx = 'assets/Icons/Netflix.png';
+    } else if (Name == 'prime' || Name == 'Prime') {
+      imx = 'assets/Icons/amazon.png';
+    } else if (Name == 'spotify' || Name == 'Spotify') {
+      imx = 'assets/Icons/spotify.png';
+    } else if (Name == 'adobe' || Name == 'Adobe') {
+      imx = 'assets/Icons/adobe.png';
+    } else if (Name == 'disney' || Name == 'Disney') {
+      imx = 'assets/Icons/disney.png';
+    }
+
+    return imx;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +38,15 @@ class subcard extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10, top: 10, bottom: 10),
           child: Row(
             children: [
-              Image.asset(
-                'assets/Icons/Netflix.png',
-                height: 50,
-                width: 50,
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: Image.asset(
+                    findasset(),
+                  ),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
