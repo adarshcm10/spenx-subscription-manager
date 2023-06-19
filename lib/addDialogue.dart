@@ -40,11 +40,50 @@ class _addDialogueState extends State<addDialogue> {
       var price = widget.price.text;
       NotificationService().showNotification(
           title: "Expire soon!",
-          body: subname1 + " is due " + descp + " with \$" + price);
+          body: subname1 +
+              " is due in " +
+              calculateDaysDifference(descp) +
+              " with \$" +
+              price);
       widget.subname.clear();
       widget.duedt.clear();
       widget.price.clear();
     }
+  }
+
+  String calculateDaysDifference(String date) {
+    final now = DateTime.now();
+    final dateParts = date.split('-');
+    final targetDate = DateTime(
+      int.parse(dateParts[2]), // year
+      int.parse(dateParts[1]), // month
+      int.parse(dateParts[0]), // day
+    );
+
+    final difference = targetDate.difference(now).inDays;
+    String dtformat;
+    if (difference == 1) {
+      dtformat = '$difference day';
+    } else if (difference == 0) {
+      dtformat = 'Today';
+    } else {
+      if (difference < 0) {
+        dtformat = 'Expired';
+      } else if (difference > 30) {
+        dtformat = 'More than 30 days';
+      } else if (difference > 6 && difference < 30) {
+        int x = difference ~/ 7;
+        int y = difference % 7;
+        if (y == 0) {
+          dtformat = '$x week';
+        } else {
+          dtformat = '$x weeks $y days ';
+        }
+      } else {
+        dtformat = '$difference days';
+      }
+    }
+    return dtformat;
   }
 
   @override

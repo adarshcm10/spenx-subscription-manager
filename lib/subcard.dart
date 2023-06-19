@@ -21,8 +21,42 @@ class subcard extends StatelessWidget {
     } else if (Name == 'disney' || Name == 'Disney') {
       imx = 'assets/Icons/disney.png';
     }
-
     return imx;
+  }
+
+  String calculateDaysDifference(String date) {
+    final now = DateTime.now();
+    final dateParts = date.split('-');
+    final targetDate = DateTime(
+      int.parse(dateParts[2]), // year
+      int.parse(dateParts[1]), // month
+      int.parse(dateParts[0]), // day
+    );
+
+    final difference = targetDate.difference(now).inDays;
+    String dtformat;
+    if (difference == 1) {
+      dtformat = '$difference day';
+    } else if (difference == 0) {
+      dtformat = 'Today';
+    } else {
+      if (difference < 0) {
+        dtformat = 'Expired';
+      } else if (difference > 30) {
+        dtformat = 'More than 30 days';
+      } else if (difference > 6 && difference < 30) {
+        int x = difference ~/ 7;
+        int y = difference % 7;
+        if (y == 0) {
+          dtformat = '$x week';
+        } else {
+          dtformat = '$x weeks $y days ';
+        }
+      } else {
+        dtformat = '$difference days';
+      }
+    }
+    return dtformat;
   }
 
   @override
@@ -60,7 +94,7 @@ class subcard extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
-                    child: Text(desc,
+                    child: Text('${calculateDaysDifference(desc)} left',
                         style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
