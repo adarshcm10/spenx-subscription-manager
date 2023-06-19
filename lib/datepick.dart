@@ -24,13 +24,13 @@ class _YourWidgetState extends State<YourWidget> {
         builder: (context, child) {
           return Theme(
             data: ThemeData.dark().copyWith(
-              colorScheme: ColorScheme.dark(
-                primary: Colors.white.withOpacity(0.7),
+              colorScheme: const ColorScheme.dark(
+                primary: Colors.white,
                 onPrimary: Colors.black,
-                surface: Colors.white.withOpacity(0.7),
-                onSurface: Colors.black,
+                surface: Color(0xff020202),
+                onSurface: Colors.white,
               ),
-              dialogBackgroundColor: Colors.white.withOpacity(0.7),
+              dialogBackgroundColor: Colors.black.withOpacity(0.9),
             ),
             child: child!,
           );
