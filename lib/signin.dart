@@ -27,7 +27,7 @@ class _signinState extends State<signin> {
     } else {
       Navigator.of(context).pushReplacement(DissolvePageRoute(
           page: home(
-        user: 'adarsh',
+        user: controller1.text,
       )));
     }
   }

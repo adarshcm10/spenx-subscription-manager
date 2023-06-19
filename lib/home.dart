@@ -69,6 +69,13 @@ class _homeState extends State<home> {
     subscriptions[index][1] = updatedDateStr;
   }
 
+  String monthYear() {
+    var now = DateTime.now();
+    var formatter = DateFormat('MMMM yyyy');
+    var formattedDate = formatter.format(now);
+    return formattedDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     double expense = totalExpense();
@@ -186,10 +193,24 @@ class _homeState extends State<home> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 34),
+            padding: const EdgeInsets.only(top: 10),
             child: Center(
               child: Text(
-                'Total due\nthis month of ${widget.user}',
+                'Hii ${widget.user},',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'GothamBold',
+                  fontSize: 25,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Center(
+              child: Text(
+                'Total dues in \n${monthYear()}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'GothamLight',
@@ -319,8 +340,15 @@ class _homeState extends State<home> {
                             motion: const DrawerMotion(),
                             children: [
                               SlidableAction(
+                                label: 'Mark as Paid',
                                 icon: Icons.star,
-                                backgroundColor: Colors.yellow,
+                                //height of 50
+
+                                //border radius of 20
+                                borderRadius: BorderRadius.circular(10),
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    Color.fromARGB(255, 67, 67, 67),
                                 onPressed: (context) => {
                                   setState(() {
                                     changedate(index);
@@ -334,8 +362,12 @@ class _homeState extends State<home> {
                             motion: const DrawerMotion(),
                             children: [
                               SlidableAction(
+                                label: 'Delete',
                                 icon: Icons.delete,
-                                backgroundColor: Colors.red,
+                                borderRadius: BorderRadius.circular(10),
+                                foregroundColor: Colors.white,
+                                backgroundColor:
+                                    Color.fromARGB(255, 67, 67, 67),
                                 onPressed: (context) => {
                                   setState(() {
                                     subscriptions.removeAt(index);
