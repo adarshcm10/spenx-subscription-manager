@@ -1,6 +1,8 @@
 // ignore_for_file: camel_case_types, prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:spenx/addDialogue.dart';
 import 'package:spenx/getstarted.dart';
 import 'package:spenx/services/notif_service.dart';
@@ -19,13 +21,52 @@ class home extends StatefulWidget {
 
 class _homeState extends State<home> {
   List subscriptions = [];
-//a function to calculate total expenses that adds up all the prices in the list
+
   double totalExpense() {
     double total = 0;
     for (int i = 0; i < subscriptions.length; i++) {
-      total += double.parse(subscriptions[i][2].substring(1));
+      String amountString = subscriptions[i][2];
+      try {
+        // Remove any non-numeric characters except the decimal point
+        amountString = amountString.replaceAll(RegExp(r'[^\d.]'), '');
+
+        // Parse the amount as a double value
+        double amount = double.parse(amountString);
+
+        // Round the amount to two decimal places
+        amount = double.parse(amount.toStringAsFixed(2));
+
+        total += amount;
+      } catch (e) {
+        print('Error parsing amount: $amountString');
+      }
     }
     return total;
+  }
+
+  void paid(int index) {
+    int indexToMove = index; // Index of the row to move to the end
+
+    List<String> sublistToMove =
+        subscriptions[indexToMove]; // Extract the sublist to move
+
+    subscriptions
+        .removeAt(indexToMove); // Remove the sublist from the original position
+    subscriptions.add(sublistToMove); // Add the sublist at the end of the list
+  }
+
+  void changedate(int index) {
+    String dateStr = subscriptions[index][1]; // Assuming "dd-mm-yyyy" format
+
+    DateFormat inputFormat = DateFormat('dd-MM-yyyy');
+    DateTime oldDate = inputFormat.parse(dateStr);
+
+    DateTime newDate = oldDate.add(const Duration(days: 30));
+
+    DateFormat outputFormat = DateFormat('dd-MM-yyyy');
+    String updatedDateStr = outputFormat.format(newDate);
+
+    subscriptions[index][1] = updatedDateStr;
   }
 
   @override
@@ -148,7 +189,7 @@ class _homeState extends State<home> {
             padding: const EdgeInsets.only(top: 34),
             child: Center(
               child: Text(
-                'Total due\nthis month of ' + widget.user,
+                'Total due\nthis month of ${widget.user}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'GothamLight',
@@ -250,7 +291,7 @@ class _homeState extends State<home> {
                                                   subscriptions.add([
                                                     widget.subname.text,
                                                     widget.duedt.text,
-                                                    "\$" + widget.price.text,
+                                                    "\$${widget.price.text}",
                                                   ]);
                                                 });
                                                 Navigator.pop(context);
@@ -270,12 +311,44 @@ class _homeState extends State<home> {
                   ))
               : Expanded(
                   child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       itemCount: subscriptions.length,
                       itemBuilder: (context, index) {
-                        return subcard(
-                          Name: subscriptions[index][0],
-                          desc: subscriptions[index][1],
-                          Rate: subscriptions[index][2],
+                        return Slidable(
+                          startActionPane: ActionPane(
+                            motion: const DrawerMotion(),
+                            children: [
+                              SlidableAction(
+                                icon: Icons.star,
+                                backgroundColor: Colors.yellow,
+                                onPressed: (context) => {
+                                  setState(() {
+                                    changedate(index);
+                                    paid(index);
+                                  }),
+                                },
+                              ),
+                            ],
+                          ),
+                          endActionPane: ActionPane(
+                            motion: const DrawerMotion(),
+                            children: [
+                              SlidableAction(
+                                icon: Icons.delete,
+                                backgroundColor: Colors.red,
+                                onPressed: (context) => {
+                                  setState(() {
+                                    subscriptions.removeAt(index);
+                                  })
+                                },
+                              ),
+                            ],
+                          ),
+                          child: subcard(
+                            Name: subscriptions[index][0],
+                            desc: subscriptions[index][1],
+                            Rate: subscriptions[index][2],
+                          ),
                         );
                       }),
                 ),
