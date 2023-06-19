@@ -23,6 +23,30 @@ class addDialogue extends StatefulWidget {
 }
 
 class _addDialogueState extends State<addDialogue> {
+  void validate() {
+    if (widget.subname.text.isEmpty ||
+        widget.price.text.isEmpty ||
+        widget.duedt.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Subscription fields can\'t be empty'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      widget.onSave();
+      var subname1 = widget.subname.text;
+      var descp = widget.duedt.text;
+      var price = widget.price.text;
+      NotificationService().showNotification(
+          title: "Expire soon!",
+          body: subname1 + " is due " + descp + " with \$" + price);
+      widget.subname.clear();
+      widget.duedt.clear();
+      widget.price.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -83,45 +107,6 @@ class _addDialogueState extends State<addDialogue> {
                 ),
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 10),
-            //   child: TextField(
-            //     textCapitalization: TextCapitalization.sentences,
-            //     controller: widget.duedt,
-            //     decoration: InputDecoration(
-            //       hintText: 'Due Date',
-            //       hintStyle: TextStyle(
-            //         fontFamily: 'GothamLight',
-            //         fontSize: 20,
-            //         color: Colors.white.withOpacity(0.7),
-            //       ),
-            //       contentPadding: const EdgeInsets.symmetric(
-            //           vertical: 10.0, horizontal: 15.0),
-            //       border: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(7.0),
-            //         borderSide: BorderSide(
-            //           color: Colors.white.withOpacity(0.6),
-            //         ),
-            //       ),
-            //       focusedBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(7.0),
-            //         borderSide: BorderSide(
-            //           color: Colors.white.withOpacity(0.7),
-            //         ),
-            //       ),
-            //       enabledBorder: OutlineInputBorder(
-            //         borderRadius: BorderRadius.circular(7.0),
-            //         borderSide: BorderSide(
-            //           color: Colors.white.withOpacity(0.6),
-            //         ),
-            //       ),
-            //     ),
-            //     autofocus: false,
-            //     style: const TextStyle(
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ),
             YourWidget(
               duedt: widget.duedt,
             ),
@@ -178,19 +163,7 @@ class _addDialogueState extends State<addDialogue> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    widget.onSave();
-                    var subname1 = widget.subname.text;
-                    var descp = widget.duedt.text;
-                    var price = widget.price.text;
-                    NotificationService().showNotification(
-                        title: "Expire soon!",
-                        body:
-                            subname1 + " is due " + descp + " with \$" + price);
-
-                    //Navigator.pop(context);
-                    widget.subname.clear();
-                    widget.duedt.clear();
-                    widget.price.clear();
+                    validate();
                   },
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
