@@ -8,6 +8,7 @@ import 'package:spenx/getstarted.dart';
 import 'package:spenx/services/notif_service.dart';
 import 'package:spenx/subcard.dart';
 import 'package:spenx/transitions.dart';
+import 'package:status_alert/status_alert.dart';
 
 class home extends StatefulWidget {
   String user;
@@ -76,6 +77,17 @@ class _homeState extends State<home> {
     return formattedDate;
   }
 
+  void success(String name) {
+    StatusAlert.show(
+      context,
+      duration: const Duration(seconds: 2),
+      title: '$name added',
+      subtitle: 'Subscription added successfully',
+      configuration: const IconConfiguration(icon: Icons.done_all_outlined),
+      maxWidth: 260,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double expense = totalExpense();
@@ -102,7 +114,7 @@ class _homeState extends State<home> {
                             subscriptions.add([
                               widget.subname.text,
                               widget.duedt.text,
-                              "\$" + widget.price.text,
+                              "₹" + widget.price.text,
                             ]);
                           });
                           Navigator.pop(context);
@@ -148,29 +160,36 @@ class _homeState extends State<home> {
                             fontSize: 23),
                       ),
                       onTap: () {
-                        //Navigator.push(context, SlideRightRoute(page: home()));
+                        //pop
+                        Navigator.pop(context);
                       }),
                   ListTile(
                       title: const Text(
-                        "Monthly Report",
+                        "Add Subscription",
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'GothamBold',
                             fontSize: 23),
                       ),
                       onTap: () {
-                        //Navigator.push(context, SlideRightRoute(page: home()));
-                      }),
-                  ListTile(
-                      title: const Text(
-                        "Profile",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'GothamBold',
-                            fontSize: 23),
-                      ),
-                      onTap: () {
-                        //Navigator.push(context, SlideRightRoute(page: home()));
+                        //pop
+                        Navigator.pop(context);
+                        showDialog(
+                            context: context,
+                            builder: (context) => addDialogue(
+                                subname: widget.subname,
+                                duedt: widget.duedt,
+                                price: widget.price,
+                                onSave: () {
+                                  setState(() {
+                                    subscriptions.add([
+                                      widget.subname.text,
+                                      widget.duedt.text,
+                                      "₹${widget.price.text}",
+                                    ]);
+                                  });
+                                  Navigator.pop(context);
+                                }));
                       }),
                   ListTile(
                       title: const Text(
@@ -181,7 +200,7 @@ class _homeState extends State<home> {
                             fontSize: 23),
                       ),
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context, FadeRoute(page: const getstarted()));
                       }),
                 ],
@@ -222,9 +241,9 @@ class _homeState extends State<home> {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(top: 25),
+            padding: const EdgeInsets.only(top: 25, bottom: 60),
             child: Text(
-              '\$$expense',
+              '₹$expense',
               style: TextStyle(
                 fontFamily: 'GothamBold',
                 color: Colors.white,
@@ -232,30 +251,7 @@ class _homeState extends State<home> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16, bottom: 20),
-            child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  NotificationService().showNotification(
-                      title: 'Sample title', body: 'It works!');
-                },
-                child: Text(
-                  'View Report',
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Color(0xff080808),
-                      fontFamily: 'GothamBold'),
-                )),
-          ),
+
           //if subscriptions list is empty, display a sized box else diaplay the list
           subscriptions.isEmpty
               ? Container(
@@ -312,10 +308,11 @@ class _homeState extends State<home> {
                                                   subscriptions.add([
                                                     widget.subname.text,
                                                     widget.duedt.text,
-                                                    "\$${widget.price.text}",
+                                                    "₹${widget.price.text}",
                                                   ]);
                                                 });
                                                 Navigator.pop(context);
+                                                success(widget.subname.text);
                                               }));
                                     },
                                     child: Text(

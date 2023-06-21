@@ -24,11 +24,18 @@ class _signinState extends State<signin> {
           duration: Duration(seconds: 2),
         ),
       );
-    } else {
+    } else if (controller1.text == 'adarsh' && controller2.text == 'adarsh') {
       Navigator.of(context).pushReplacement(DissolvePageRoute(
           page: home(
         user: controller1.text,
       )));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid Email or password!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
@@ -152,8 +159,8 @@ class _signinState extends State<signin> {
                     (states) => Colors.transparent,
                   ),
                 ),
-                child: Column(
-                  children: const [
+                child: const Column(
+                  children: [
                     Text(
                       'don\'t have an account?',
                       style: TextStyle(
