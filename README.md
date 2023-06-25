@@ -17,7 +17,7 @@ The Subscription Tracker app is a user-friendly and efficient tool designed to h
 
 ## Installation
 
-1. Clone the repository: `https://github.com/adarshcm10/spenx-subscription-manager`
+1. Clone the repository: `https://github.com/adarshcm10/spenx-subscription-manager.git`
 
 2. Open the project in your preferred development environment (e.g., Android Studio, Visual Studio Code).
 
