@@ -43,7 +43,7 @@ class _addDialogueState extends State<addDialogue> {
           body: subname1 +
               " is due in " +
               calculateDaysDifference(descp) +
-              " with \$" +
+              " with ₹" +
               price);
       widget.subname.clear();
       widget.duedt.clear();

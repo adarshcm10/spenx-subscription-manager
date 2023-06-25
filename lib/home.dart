@@ -45,6 +45,18 @@ class _homeState extends State<home> {
     return total;
   }
 
+  String conversion(double total) {
+    String totalStr = total.toString();
+    //if total greater than 1000, convert to k
+    if (total > 1000) {
+      total = total / 1000;
+      total = double.parse(total.toStringAsFixed(2));
+      totalStr = '${total}k';
+    }
+
+    return totalStr;
+  }
+
   void paid(int index) {
     int indexToMove = index; // Index of the row to move to the end
 
@@ -90,7 +102,8 @@ class _homeState extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    double expense = totalExpense();
+    double ttl = totalExpense();
+    String expense = conversion(ttl);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color(0xff080808),
@@ -114,7 +127,7 @@ class _homeState extends State<home> {
                             subscriptions.add([
                               widget.subname.text,
                               widget.duedt.text,
-                              "₹" + widget.price.text,
+                              "₹${widget.price.text}",
                             ]);
                           });
                           Navigator.pop(context);
@@ -241,13 +254,24 @@ class _homeState extends State<home> {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(top: 25, bottom: 60),
+            padding: const EdgeInsets.only(top: 25, bottom: 0),
             child: Text(
               '₹$expense',
               style: TextStyle(
                 fontFamily: 'GothamBold',
                 color: Colors.white,
                 fontSize: 70,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 0, bottom: 20),
+            child: Text(
+              '(₹$ttl)',
+              style: TextStyle(
+                fontFamily: 'GothamLight',
+                color: Colors.white,
+                fontSize: 30,
               ),
             ),
           ),

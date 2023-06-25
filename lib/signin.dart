@@ -24,7 +24,9 @@ class _signinState extends State<signin> {
           duration: Duration(seconds: 2),
         ),
       );
-    } else if (controller1.text == 'adarsh' && controller2.text == 'adarsh') {
+    } else if ((controller1.text == 'adarsh' && controller2.text == 'adarsh') ||
+        (controller1.text == 'arjun' && controller2.text == 'arjun') ||
+        (controller1.text == 'krishna' && controller2.text == 'krishna')) {
       Navigator.of(context).pushReplacement(DissolvePageRoute(
           page: home(
         user: controller1.text,
