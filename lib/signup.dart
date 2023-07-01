@@ -31,7 +31,7 @@ class _signupState extends State<signup> {
     } else {
       Navigator.of(context).pushReplacement(DissolvePageRoute(
           page: home(
-        user: 'adarsh',
+        user: widget.name.text,
       )));
     }
   }
