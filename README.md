@@ -3,6 +3,11 @@
 
 The Subscription Tracker app is a user-friendly and efficient tool designed to help you manage your subscriptions in one central location. With this app, you can easily keep track of your subscriptions, their due dates, and prices, ensuring that you never miss a payment again. It provides timely notifications to remind you when your subscriptions are about to expire, giving you full control over your monthly expenses.
 
+![](UI/1.jpg)
+![](UI/2.jpg)
+![](UI/3.jpg)
+![](UI/4.jpg)
+
 ## Features
 
 - Add and manage all your subscriptions in one place.
